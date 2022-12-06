@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, View } from 'react-native'
+import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
 import Cell from './Cell'
@@ -10,20 +10,20 @@ export default function Body() {
     const dispatch = useDispatch()
 
     return (
-    <View style={styles.body}>
+    <SafeAreaView style={styles.body}>
 
        {
-           cells.map(row => {
+           cells.map((row, indexRow) => {
             const myRow = row.split('')     
             return myRow.map((element,index) => 
-                     <Cell element = { element }  index = {index} />)
+                     <Cell element = { element }  index = {index} key ={Number(indexRow+index)} />)
              
             })
 
         
         }
         
-    </View>
+    </SafeAreaView>
   )
 }
 

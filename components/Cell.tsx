@@ -2,9 +2,9 @@ import React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 
 
-const  Cell = (element : string , index :number ) => {
+const  Cell = (element : string , index :number, key : number) => {
   return(
-    <View style={styles.cell}>
+    <View key={key} style={styles.cell}>
         <Text> {element} {index}</Text>
     </View>
   )
