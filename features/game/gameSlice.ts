@@ -49,7 +49,6 @@ export const gameSlice = createSlice({
 
     toggleCell : (state, action: PayloadAction<{indexRow : number , index : number}>)=> {
         const {indexRow , index } = action.payload 
-        console.log(`toggle ${indexRow} ${index}`)
         const newCells = state.cells
             toggle (newCells , indexRow , index)    
             toggle (newCells , indexRow , index-1)
@@ -63,7 +62,6 @@ export const gameSlice = createSlice({
        //checkForVictory() 
        let game = state.cells.filter(row => 
         row.indexOf('-') != -1)
-        console.log(`comsole is won ${game}`)
         if (game.length === 0) {
             state.isWon = true
         }

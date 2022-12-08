@@ -14,7 +14,7 @@ export default function Body() {
        {
            cells.map((row, indexRow) => {
             const myRow : Array<string> = row.split('')  
-             return <Row {...{myRow , indexRow, }} />
+             return <Row {...{myRow , indexRow, }} key = {indexRow}/>
           })
 
         
