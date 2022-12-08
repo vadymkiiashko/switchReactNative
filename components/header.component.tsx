@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native"
 import { useDispatch, useSelector } from "react-redux"
+import { abortGame, reloadGame } from "../features/game/gameSlice"
 import { RootState } from "../store"
 
 
@@ -11,12 +12,15 @@ const Header = (): JSX.Element => {
     const dispatch = useDispatch()
     let text = ''   
     let action =''
+    let handler = abortGame
     if(!isActive) {
         text = 'Switches'
     } else {
         if (isWon) {
             text = 'victory'
             action = 'reload'
+            handler = reloadGame
+
         } else {
             text = 'tap a switch'
             action = 'abort'
@@ -26,9 +30,9 @@ const Header = (): JSX.Element => {
     return (
         <View style={styles.header}>
             <Text style={{textTransform : 'uppercase', fontSize: 20,}}>{text}</Text>
-            <TouchableOpacity style={{position:'absolute' , right:10 ,}}>
-            <Text > {action} </Text>
-        </TouchableOpacity>
+            <TouchableOpacity style={{position:'absolute' , right:10 ,}} onPress={()=>dispatch(handler())}>
+                <Text > {action} </Text>
+            </TouchableOpacity>
       </View>
     )
 }

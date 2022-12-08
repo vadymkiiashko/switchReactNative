@@ -2,7 +2,7 @@ import React from 'react'
 import { SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { useDispatch, useSelector } from "react-redux"
 import { RootState } from "../store"
-import Cell from './Cell'
+import Row from './Row'
 
 
 export default function Body() {
@@ -11,18 +11,14 @@ export default function Body() {
 
     return (
     <SafeAreaView style={styles.body}>
-
        {
            cells.map((row, indexRow) => {
-            const myRow = row.split('')     
-            return myRow.map((element,index) => 
-                     <Cell element = { element }  index = {index} key ={Number(indexRow+index)} />)
-             
-            })
+            const myRow : Array<string> = row.split('')  
+             return <Row {...{myRow , indexRow, }} />
+          })
 
         
-        }
-        
+        }    
     </SafeAreaView>
   )
 }
@@ -32,6 +28,8 @@ export default function Body() {
 const styles = StyleSheet.create({
 body :{
     height : '80%',
-    backgroundColor : 'red',
+    backgroundColor : '#ECECEE',
+    alignItems : 'center',
+    
   },
 })

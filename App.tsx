@@ -19,6 +19,7 @@ import {
 } from 'react-native';
 import { Provider } from 'react-redux';
 import Body from './components/Body';
+import Footer from './components/Footer';
 import Header from './components/header.component'
 import { store } from './store';
 
@@ -33,12 +34,7 @@ const App = () => {
       <SafeAreaView >
         <Header actionType='' />
         <Body />
-        <View style={styles.footer}>
-        <Text style={{textTransform : 'uppercase', fontSize: 20,}}>SwitCHes</Text>
-          <TouchableOpacity style={{position:'absolute' , right:10}}>
-              <Text style={{textDecorationLine:'underlined' , color : '#E8ABD0'}}> Abort </Text>
-          </TouchableOpacity>
-        </View>
+        <Footer />
       </SafeAreaView>
     </Provider>
   );
@@ -64,13 +60,7 @@ const styles = StyleSheet.create({
   
 
 
-  footer :{
-    width: '100%',
-    height : '10%',
-    alignItems: 'center',
-    justifyContent : 'center',
-    backgroundColor : '#F8F8F8'
-  }
+  
 });
 
 export default App;

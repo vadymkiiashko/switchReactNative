@@ -21,6 +21,13 @@ const initialState: GameState = {
   cells : getPattern()
 }
 
+const toggle = (cells : Array<string> , x :number, y : number) => {
+    if (x < cells[0].length && x >= 0 && y < cells.length && y >= 0) {
+        cells[x] = cells[x].substring(0,y) + `${cells[x][y] === 'x' ? '-' : 'x' }` + cells[x].substring(y+1,cells[x].length) 
+    }
+} 
+
+
 export const gameSlice = createSlice({
   name: 'game',
   // `createSlice` will infer the state type from the `initialState` argument
@@ -40,43 +47,24 @@ export const gameSlice = createSlice({
         
     },
 
-    toggleCell : (state, action: PayloadAction<number>)=> {
-        const id = action.payload 
-        let newCells = state.cells.map(
-            (row,indexRow) => row.map(
-                (element , indexElement)=> {
-                    if(element.id === id) {
-                        element.isOn = !element.isOn
-
-                        if(indexRow+1 < state.cells.length ){
-                            state.cells[indexRow+1][indexElement].isOn = !state.cells[indexRow+1][indexElement].isOn
-                        }
-                        if(indexRow-1 > -1 ){
-                            state.cells[indexRow-1][indexElement].isOn = !state.cells[indexRow-1][indexElement].isOn
-                        }
-
-                        if(indexElement+1 < row.length){
-                            state.cells[indexRow][indexElement+1].isOn = !state.cells[indexRow][indexElement+1].isOn
-                        }
-
-                        if(indexElement-1 > -1){
-                            state.cells[indexRow][indexElement-1].isOn = !state.cells[indexRow][indexElement-1].isOn
-                        }          
-                        
-                    }
-                    return element
-                }
-
-            )
-        )
+    toggleCell : (state, action: PayloadAction<{indexRow : number , index : number}>)=> {
+        const {indexRow , index } = action.payload 
+        console.log(`toggle ${indexRow} ${index}`)
+        const newCells = state.cells
+            toggle (newCells , indexRow , index)    
+            toggle (newCells , indexRow , index-1)
+            toggle (newCells , indexRow , index+1)
+            toggle (newCells , indexRow -1 , index)
+            toggle (newCells , indexRow +1, index)
         state.cells = newCells;
-        state.clicks += 1;
+        if(!state.isWon) {
+            state.clicks += 1;
+        }
        //checkForVictory() 
-       let game = state.cells.find(row => 
-        row.find(element => element.isOn === false))
-        if (!game) {
-
-            //handleVictory()
+       let game = state.cells.filter(row => 
+        row.indexOf('-') != -1)
+        console.log(`comsole is won ${game}`)
+        if (game.length === 0) {
             state.isWon = true
         }
 
